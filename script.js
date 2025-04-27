@@ -22,6 +22,7 @@ function applyLuck(pets, luckMultiplier) {
             ? pet.baseChance * luckMultiplier
             : pet.baseChance;
     });
+
     const total = pets.reduce((sum, p) => sum + p.adjustedChance, 0);
     pets.forEach(p => {
         p.normalizedChance = p.adjustedChance / total;
@@ -52,13 +53,17 @@ function hatchEggs(num) {
     for (let i = 0; i < num; i++) {
         const pet = choosePet();
         const isShiny = Math.random() < shinyChance;
-        // **now truly independent**—allows Shiny Mythic
         const isMythic = mythicRarities.has(pet.rarity) && Math.random() < mythicChance;
 
+        // Both shiny and mythic could apply, so check both
         let label = pet.name;
-        if (isShiny && isMythic)      label = `Shiny Mythic ${pet.name}`;
-        else if (isShiny)             label = `Shiny ${pet.name}`;
-        else if (isMythic)            label = `Mythic ${pet.name}`;
+        if (isShiny && isMythic) {
+            label = `Shiny Mythic ${pet.name}`;
+        } else if (isShiny) {
+            label = `Shiny ${pet.name}`;
+        } else if (isMythic) {
+            label = `Mythic ${pet.name}`;
+        }
 
         if (!results[label]) {
             results[label] = {
