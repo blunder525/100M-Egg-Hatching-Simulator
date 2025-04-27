@@ -5,7 +5,7 @@ const pets = [
   { name: "Golden Dragon",   baseChance: 3.0,     rarity: "epic" },
   { name: "Diamond Serpent", baseChance: 0.04,    rarity: "legendary" },
   { name: "Diamond Hexarium",baseChance: 0.002,   rarity: "legendary" },
-  { name: "King Pufferfish", baseChance: 0.0001,  rarity: "legendary" },
+  { name: "King Pufferfish", baseChance: 0.000125,  rarity: "legendary" },
   { name: "Royal Trophy",    baseChance: 0.000002,rarity: "secret" },
 ];
 
