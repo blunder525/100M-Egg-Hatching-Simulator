@@ -1,3 +1,4 @@
+// script.js
 const pets = [
   { name: "Bronze Bunny",    baseChance: 64.0,    rarity: "common" },
   { name: "Silver Fox",      baseChance: 30.0,    rarity: "unique" },
@@ -8,7 +9,7 @@ const pets = [
   { name: "Royal Trophy",    baseChance: 0.000002,rarity: "secret" },
 ];
 
-let shinyChance = 1 / 40;  // Updated shiny chance
+let shinyChance = 1 / 40;    // Updated shiny chance
 let mythicChance = 1 / 100;  // Updated mythic chance
 const mythicRarities = new Set(["legendary", "secret"]);
 let luckPercent = 100;
@@ -21,7 +22,9 @@ function applyLuck(pets, luckMultiplier) {
       : pet.baseChance;
   });
   const total = pets.reduce((sum, p) => sum + p.adjustedChance, 0);
-  pets.forEach(p => p.normalizedChance = p.adjustedChance / total);
+  pets.forEach(p => {
+    p.normalizedChance = p.adjustedChance / total;
+  });
 }
 
 // Choose one pet weighted by normalizedChance
@@ -71,6 +74,7 @@ function hatchEggs(num) {
 
 // Render results table
 function printResults(results) {
+  // Build an array with true variant probability included
   const formatted = Object.entries(results).map(([name, d]) => {
     const prob = d.normalizedChance
       * (d.shiny  ? shinyChance  : 1)
@@ -78,11 +82,13 @@ function printResults(results) {
     return {
       name,
       count: d.count,
+      prob,
       oddsStr: getOriginalOdds(d.baseChance, d.shiny, d.mythic)
     };
   });
 
-  formatted.sort((a,b) => b.count - a.count);
+  // Sort by highest-to-lowest probability (not raw count)
+  formatted.sort((a, b) => b.prob - a.prob);
 
   let html = "<h3>🎉 Hatch Results:</h3><ul>";
   formatted.forEach(item => {
@@ -108,13 +114,13 @@ document.getElementById("change-luck-button").addEventListener("click", () => {
 });
 
 document.getElementById("change-shiny-button").addEventListener("click", () => {
-  const v = parseFloat(document.getElementById("shiny-input").value)/100;
+  const v = parseFloat(document.getElementById("shiny-input").value) / 100;
   if (isNaN(v) || v < 0) return alert("Please enter a valid shiny percentage.");
   shinyChance = v;
 });
 
 document.getElementById("change-mythic-button").addEventListener("click", () => {
-  const v = parseFloat(document.getElementById("mythic-input").value)/100;
+  const v = parseFloat(document.getElementById("mythic-input").value) / 100;
   if (isNaN(v) || v < 0) return alert("Please enter a valid mythic percentage.");
   mythicChance = v;
 });
