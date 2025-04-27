@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hatching Simulator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hatching Simulator</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <div class="container">
-        <h1>Hatching Simulator</h1>
-        <p>Current Luck: <span id="luck">100%</span></p>
+  <div class="wrapper">
+    <!-- Main Simulator Panel -->
+    <div class="container main-container">
+      <h1>Hatching Simulator</h1>
+      <p>Current Luck: <span id="luck">100%</span></p>
 
-        <div>
-            <button id="hatch-button">Hatch Eggs</button>
-            <input type="number" id="num-eggs" placeholder="Number of Eggs" min="1">
-        </div>
+      <div class="control-group">
+        <button id="hatch-button">Hatch Eggs</button>
+        <input type="number" id="num-eggs" placeholder="Number of Eggs" min="1"/>
+      </div>
 
-        <div>
-            <button id="change-luck-button">Change Luck</button>
-            <input type="number" id="luck-input" placeholder="Enter Luck %">
-        </div>
+      <div class="control-group">
+        <button id="change-luck-button">Change Luck (%)</button>
+        <input type="number" id="luck-input" placeholder="Enter Luck %" min="0"/>
+      </div>
 
-        <div>
-            <button id="change-shiny-button">Change Shiny Odds</button>
-            <input type="number" id="shiny-input" placeholder="Enter Shiny %">
-        </div>
+      <p id="luck-reminder">
+        💡 Don’t forget to click “Change Luck (%)” after modifying the luck value!
+      </p>
 
-        <div>
-            <button id="change-mythic-button">Change Mythic Odds</button>
-            <input type="number" id="mythic-input" placeholder="Enter Mythic %">
-        </div>
-
-        <div>
-            <button id="toggle-dark-mode">Toggle Dark Mode</button>
-        </div>
-
-        <div id="results"></div>
+      <div id="results"></div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Sidebar Settings Panel -->
+    <div class="container sidebar">
+      <h2>Settings</h2>
+
+      <div class="control-group">
+        <label for="shiny-input">Change Shiny Odds (%)</label>
+        <input type="number" id="shiny-input" placeholder="Shiny %" min="0"/>
+        <button id="change-shiny-button">Change Shiny Odds (%)</button>
+      </div>
+
+      <div class="control-group">
+        <label for="mythic-input">Change Mythic Odds (%)</label>
+        <input type="number" id="mythic-input" placeholder="Mythic %" min="0"/>
+        <button id="change-mythic-button">Change Mythic Odds (%)</button>
+      </div>
+
+      <button id="toggle-dark-mode">Toggle Dark Mode</button>
+
+      <p id="variant-reminder">
+        💡 Remember to click “Change Shiny Odds (%)” or “Change Mythic Odds (%)” after modifying values!
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
