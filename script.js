@@ -8,8 +8,8 @@ const pets = [
   { name: "Royal Trophy",    baseChance: 0.000002,rarity: "secret" },
 ];
 
-let shinyChance = 1 / 26;
-let mythicChance = 1 / 40;
+let shinyChance = 1 / 40;  // Updated shiny chance
+let mythicChance = 1 / 100;  // Updated mythic chance
 const mythicRarities = new Set(["legendary", "secret"]);
 let luckPercent = 100;
 
