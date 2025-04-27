@@ -121,4 +121,11 @@ document.getElementById("change-shiny-button").addEventListener("click", () => {
 });
 
 document.getElementById("change-mythic-button").addEventListener("click", () => {
-    const newMythic = parseFloat(document.getElementById("mythic-input").value) / 100
+    const newMythic = parseFloat(document.getElementById("mythic-input").value) / 100;
+    if (isNaN(newMythic) || newMythic < 0) return alert("Please enter a valid mythic percentage.");
+    mythicChance = newMythic;
+});
+
+document.getElementById("toggle-dark-mode").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
