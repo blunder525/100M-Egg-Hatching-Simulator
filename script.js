@@ -1,4 +1,3 @@
-// script.js
 const pets = [
     { name: "Bronze Bunny", baseChance: 64.0, rarity: "common" },
     { name: "Silver Fox", baseChance: 30.0, rarity: "unique" },
@@ -9,10 +8,9 @@ const pets = [
     { name: "Royal Trophy", baseChance: 0.000002, rarity: "secret" },
 ];
 
-const shinyChance = 1 / 26;
-const mythicChance = 1 / 40;
+let shinyChance = 1 / 26;
+let mythicChance = 1 / 40;
 const mythicRarities = new Set(["legendary", "secret"]);
-
 let luckPercent = 100;
 
 // Apply luck only to legend & secret; then normalize
@@ -96,7 +94,7 @@ function printResults(results) {
 
     let html = "<h3>🎉 Hatch Results:</h3><ul>";
     formatted.forEach(item => {
-        html += `<li>${item.name}: ${item.count} (Odds: ${item.oddsStr})</li>`;
+        html += `<li>${item.name}: ${item.count} (Original Odds: ${item.oddsStr})</li>`;
     });
     html += "</ul>";
     document.getElementById("results").innerHTML = html;
@@ -115,3 +113,12 @@ document.getElementById("change-luck-button").addEventListener("click", () => {
     luckPercent = newLuck;
     document.getElementById("luck").textContent = `${luckPercent}%`;
 });
+
+document.getElementById("change-shiny-button").addEventListener("click", () => {
+    const newShiny = parseFloat(document.getElementById("shiny-input").value) / 100;
+    if (isNaN(newShiny) || newShiny < 0) return alert("Please enter a valid shiny percentage.");
+    shinyChance = newShiny;
+});
+
+document.getElementById("change-mythic-button").addEventListener("click", () => {
+    const newMythic = parseFloat(document.getElementById("mythic-input").value) / 100
