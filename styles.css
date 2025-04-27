@@ -1,47 +1,80 @@
+/* --- Global & Dark Mode --- */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    margin: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  color: #111;
+  transition: background-color 0.3s, color 0.3s;
+}
+body.dark-mode {
+  background-color: #181818;
+  color: #f0f0f0;
 }
 
-body.dark-mode {
-    background-color: #181818;
-    color: #f0f0f0;
+/* --- Layout --- */
+.wrapper {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: background-color 0.3s ease;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
 }
-
 body.dark-mode .container {
-    background-color: #2e2e2e;
+  background-color: #2e2e2e;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 10px;
+/* --- Panel Sizes --- */
+.main-container {
+  width: 500px;
+}
+.sidebar {
+  width: 300px;
 }
 
-input {
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    width: 100px;
-    text-align: center;
+/* --- Controls --- */
+.control-group {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.control-group input {
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.control-group button {
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* --- Reminders & Results --- */
+#luck-reminder,
+#variant-reminder {
+  font-size: 13px;
+  color: #555;
+  margin-top: 10px;
+}
+
+body.dark-mode #luck-reminder,
+body.dark-mode #variant-reminder {
+  color: #ccc;
 }
 
 #results {
-    margin-top: 20px;
-    text-align: left;
+  margin-top: 25px;
+  text-align: left;
 }
