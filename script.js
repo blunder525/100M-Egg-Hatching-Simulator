@@ -9,8 +9,8 @@ const pets = [
   { name: "Royal Trophy",    baseChance: 0.000002,rarity: "secret" },
 ];
 
-let shinyChance = 1 / 40;    // Updated shiny chance
-let mythicChance = 1 / 100;  // Updated mythic chance
+let shinyChance = 1 / 40;    // Updated shiny chance (fraction)
+let mythicChance = 1 / 100;  // Updated mythic chance (fraction)
 const mythicRarities = new Set(["legendary", "secret"]);
 let luckPercent = 100;
 
@@ -38,12 +38,13 @@ function choosePet() {
   return pets[pets.length - 1];
 }
 
-// Build “1 in X” odds string from baseChance + shiny/mythic
+// Build “1 in X” original odds string from baseChance + shiny/mythic
 function getOriginalOdds(baseChance, shiny, mythic) {
-  let chance = baseChance / 100;
-  if (shiny)  chance *= shinyChance;
-  if (mythic) chance *= mythicChance;
-  return `1 in ${Math.round(1 / chance).toLocaleString()}`;
+  // baseChance is a percentage (e.g., 3.0 for 3%)
+  let odds = 1 / (baseChance / 100);
+  if (shiny)  odds *= 40;   // 1 in 40 for shinies
+  if (mythic) odds *= 100;  // 1 in 100 for mythics
+  return `1 in ${Math.round(odds).toLocaleString()}`;
 }
 
 // Hatch N eggs
@@ -61,7 +62,7 @@ function hatchEggs(num) {
     if (!results[label]) {
       results[label] = {
         count: 0,
-        normalizedChance: pet.normalizedChance,
+        normalizedChance: pet.normalizedChance, // drop rate (adjusted by luck)
         baseChance: pet.baseChance,
         shiny: isShiny,
         mythic: isMythic
@@ -76,18 +77,19 @@ function hatchEggs(num) {
 function printResults(results) {
   // Build an array with true variant probability included
   const formatted = Object.entries(results).map(([name, d]) => {
-    const prob = d.normalizedChance
+    const variantProb = d.normalizedChance
       * (d.shiny  ? shinyChance  : 1)
       * (d.mythic ? mythicChance : 1);
+
     return {
-      name,
+      name: name,
       count: d.count,
-      prob,
+      prob: variantProb,
       oddsStr: getOriginalOdds(d.baseChance, d.shiny, d.mythic)
     };
   });
 
-  // Sort by highest-to-lowest probability (not raw count)
+  // Sort by highest-to-lowest actual probability
   formatted.sort((a, b) => b.prob - a.prob);
 
   let html = "<h3>🎉 Hatch Results:</h3><ul>";
